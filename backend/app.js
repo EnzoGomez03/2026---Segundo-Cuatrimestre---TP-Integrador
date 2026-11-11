@@ -15,12 +15,13 @@
 const express = require("express");
 const app = express();
 const rutas = require("./routes/index");
+const rutasProductos = require("./routes/productos");
 
 // =============================================================================
 // RUTAS
 // =============================================================================
 app.use("/",rutas);
-
+app.use("/api/productos" , rutasProductos)
 // =============================================================================
 // PUESTA EN MARCHA DEL SERVIDOR
 // =============================================================================
