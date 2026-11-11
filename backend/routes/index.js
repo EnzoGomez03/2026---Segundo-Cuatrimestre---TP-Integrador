@@ -1,9 +1,9 @@
 const express = require("express");
-/* Objeto para organizar rutass*/ 
+/* Objeto para organizar rutass*/
 const router = express.Router();
 
-router.get("/",(req,res)=>{
-    res.send("Servidor PuntoGym funcionando");
-});
+const inicioController = require("../controllers/inicioController");
+
+router.get("/", inicioController.mostrarInicio);
 
 module.exports = router;
