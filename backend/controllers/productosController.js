@@ -1,3 +1,5 @@
+const { json } = require("express");
+
 const productos = [
     {
         id: 1,
@@ -17,4 +19,13 @@ const obtenerProductos = (req,res) => {
     res.json(productos);
 };
 
-module.exports = {obtenerProductos}
+const obtenerProductosPorId = (req,res) => {
+    
+    const id = Number(req.params.id);
+
+    const producto = productos.find( (p) => p.id === id );
+
+    resjson(producto);
+};
+
+module.exports = {obtenerProductos, obtenerProductosPorId};
