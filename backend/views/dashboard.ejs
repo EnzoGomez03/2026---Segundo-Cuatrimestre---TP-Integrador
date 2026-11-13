@@ -1,0 +1,92 @@
+<%- include("parciales/cabecera") %>
+
+<h2>Productos cargados (<%= total %>)</h2>
+
+<%
+// la misma tabla se arma dos veces, una por categoria, asi que lo dejo en una funcion aca
+%>
+
+<% const tabla = (lista, nombreCategoria) => { %>
+
+    <section class="categoria">
+        <h3><%= nombreCategoria %> <span class="cuenta"><%= lista.length %></span></h3>
+
+        <% if(lista.length === 0){ %>
+            <p class="vacio">Todavia no hay productos en esta categoria.</p>
+        <% } else { %>
+
+            <div class="tabla-scroll">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Imagen</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <% lista.forEach(producto => { %>
+                    <tr class="<%= producto.activo ? "" : "inactivo" %>">
+                        <td data-titulo="ID"><%= producto.id %></td>
+                        <td data-titulo="Imagen">
+                            <img src="/uploads/<%= producto.imagen %>" alt="<%= producto.nombre %>" class="miniatura">
+                        </td>
+                        <td data-titulo="Nombre"><%= producto.nombre %></td>
+                        <td data-titulo="Precio">$<%= producto.precio %></td>
+                        <td data-titulo="Estado">
+                            <% if(producto.activo){ %>
+                                <span class="estado activo">Activo</span>
+                            <% } else { %>
+                                <span class="estado apagado">Inactivo</span>
+                            <% } %>
+                        </td>
+                        <td data-titulo="Acciones">
+                            <div class="acciones">
+                                <a class="btn chico" href="/admin/productos/<%= producto.id %>/editar">Editar</a>
+
+                                <% if(producto.activo){ %>
+                                    <button class="btn chico peligro"
+                                            data-accion="desactivar"
+                                            data-id="<%= producto.id %>"
+                                            data-nombre="<%= producto.nombre %>">Eliminar</button>
+                                <% } else { %>
+                                    <button class="btn chico ok"
+                                            data-accion="activar"
+                                            data-id="<%= producto.id %>"
+                                            data-nombre="<%= producto.nombre %>">Activar</button>
+                                <% } %>
+                            </div>
+                        </td>
+                    </tr>
+                <% }) %>
+                </tbody>
+            </table>
+            </div>
+
+        <% } %>
+    </section>
+
+<% } %>
+
+<% tabla(accesorios, "Accesorios") %>
+<% tabla(equipamiento, "Equipamiento") %>
+
+
+<!-- modal de confirmacion, se usa para eliminar y para activar -->
+<div class="fondo-modal" id="fondoModal">
+    <div class="modal">
+        <h3 id="modalTitulo">Confirmar</h3>
+        <p id="modalTexto"></p>
+        <div class="modal-botones">
+            <button class="btn" id="btnCancelar">Cancelar</button>
+            <button class="btn peligro" id="btnConfirmar">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+
+<%- include("parciales/pie") %>

@@ -1,0 +1,49 @@
+<%- include("parciales/cabecera") %>
+
+<%
+// esta vista sirve para el alta y para la modificacion, cambia segun venga producto o null
+const editando = producto !== null;
+%>
+
+<h2><%= editando ? "Modificar producto #" + producto.id : "Nuevo producto" %></h2>
+
+<div class="errores" id="cajaErrores"></div>
+
+<form id="formProducto" class="formulario" enctype="multipart/form-data">
+
+    <label for="nombre">Nombre</label>
+    <input type="text" id="nombre" name="nombre" value="<%= editando ? producto.nombre : "" %>" required>
+
+    <label for="precio">Precio</label>
+    <input type="number" id="precio" name="precio" step="0.01" min="0" value="<%= editando ? producto.precio : "" %>" required>
+
+    <label for="categoria">Categoria</label>
+    <select id="categoria" name="categoria" required>
+        <option value="">-- elegir --</option>
+        <% categorias.forEach(cat => { %>
+            <option value="<%= cat %>" <%= editando && producto.categoria === cat ? "selected" : "" %>><%= cat %></option>
+        <% }) %>
+    </select>
+
+    <label for="imagen">Imagen</label>
+    <input type="file" id="imagen" name="imagen" accept="image/*" <%= editando ? "" : "required" %>>
+
+    <% if(editando){ %>
+        <p class="ayuda">Si no cargas una imagen nueva se mantiene la actual.</p>
+        <img src="/uploads/<%= producto.imagen %>" alt="<%= producto.nombre %>" class="previa">
+    <% } %>
+
+    <div class="form-botones">
+        <a class="btn" href="/admin">Cancelar</a>
+        <button class="btn ok" type="submit"><%= editando ? "Guardar cambios" : "Agregar" %></button>
+    </div>
+
+</form>
+
+<script>
+    // el id lo necesita el js para saber si hace POST o PUT
+    const idProducto = <%= editando ? producto.id : "null" %>;
+</script>
+<script src="/js/formulario.js"></script>
+
+<%- include("parciales/pie") %>
