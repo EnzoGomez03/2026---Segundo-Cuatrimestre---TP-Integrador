@@ -1,31 +1,45 @@
-const { json } = require("express");
+import { Producto } from "../models/productoModel.js";
 
-const productos = [
-    {
-        id: 1,
-        nombre: "Guantes  de entrenamiento",
-        precio: 15000,
-        categoria: "Accesorios"
-    },
-    {
-        id: 2,
-        nombre: "Colchoneta",
-        precio: 20000,
-        categoria: "Equipamiento"
-    }
-];
+export async function obtenerProductos(req,res){
+    const pagina = Number(req.query.pagina) || 1;
+    const limite = 5;
+    const offset = (pagina - 1) * limite;
 
-const obtenerProductos = (req,res) => {
-    res.json(productos);
+
+    const productos = await Producto.findAll({
+        where: {
+            activo : true
+        },
+        limit: limite,
+        offset: offset,
+        order: [["id","ASC"]]
+    });
+
+    const total = await Producto.count({
+        where:{
+            activo:true
+        }
+    })
+    const totalPaginas = Math.ceil(total / limite);
+
+    res.json({
+        productos: productos,
+        pagina: pagina,
+        totalPaginas: totalPaginas,
+        total: total
+    });
 };
 
-const obtenerProductosPorId = (req,res) => {
-    
+export async function obtenerProductosPorId(req, res) {
     const id = Number(req.params.id);
 
-    const producto = productos.find( (p) => p.id === id );
+    const producto = await Producto.findByPk(id);
 
-    resjson(producto);
-};
+    res.json(producto);
+}
 
-module.exports = {obtenerProductos, obtenerProductosPorId};
+export async function crearProducto(req,res) {
+    const producto = await Producto.create(req.body);
+
+    res.json(producto);
+}

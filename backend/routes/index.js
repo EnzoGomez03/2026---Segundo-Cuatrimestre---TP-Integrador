@@ -1,9 +1,9 @@
-const express = require("express");
-/* Objeto para organizar rutass*/
-const router = express.Router();
+import express from "express";
+import * as inicioController from "../controllers/inicioController.js";
 
-const inicioController = require("../controllers/inicioController");
+/** Objeto para organizar rutas */
+const router = express.Router();
 
 router.get("/", inicioController.mostrarInicio);
 
-module.exports = router;
+export default router;
