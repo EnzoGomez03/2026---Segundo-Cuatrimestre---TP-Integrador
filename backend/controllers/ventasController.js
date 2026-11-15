@@ -91,3 +91,18 @@ async function guardarVenta(nombreCliente,productos,total) {
         throw error;
     }
 }
+
+export async function obtenerVentas(req,res) {
+    try{
+        const ventas = await Venta.findAll({
+            include: Producto
+        });
+        return res.status(200).json(ventas);
+    }catch (error){
+        console.log(error);
+
+        return res.status(500).json({
+            mensaje:"Error al obtener las ventas"
+        });
+    }
+}
