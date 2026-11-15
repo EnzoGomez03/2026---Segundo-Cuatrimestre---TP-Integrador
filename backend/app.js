@@ -4,6 +4,9 @@ import rutasProductos from "./routes/productos.js"
 import rutasAdmin from "./routes/admin.js"
 import { sequelize } from "./models/db.js"
 import "./models/productoModel.js"
+import "./models/relaciones.js"
+import rutasVentas from "./routes/ventas.js"
+
 
 const app = express();
 app.use(express.json());
@@ -20,8 +23,9 @@ app.use("/uploads", express.static("uploads"));
 // RUTAS
 // =============================================================================
 app.use("/",rutas);
-app.use("/api/productos" , rutasProductos)
-app.use("/admin", rutasAdmin)
+app.use("/api/productos" , rutasProductos);
+app.use("/admin", rutasAdmin);
+app.use("/api/ventas",rutasVentas);
 // =============================================================================
 // PUESTA EN MARCHA DEL SERVIDOR
 // =============================================================================
