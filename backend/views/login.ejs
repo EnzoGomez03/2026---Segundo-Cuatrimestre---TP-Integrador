@@ -1,0 +1,28 @@
+<%- include("parciales/cabecera") %>
+
+<h2>Ingresar al panel</h2>
+
+<% if(error){ %>
+    <div class="errores visible">
+        <p><%= error %></p>
+    </div>
+<% } %>
+
+<form class="formulario" method="POST" action="/admin/login">
+
+    <label for="correo">Correo</label>
+    <input type="email" id="correo" name="correo" required>
+
+    <label for="contrasenia">Contrasenia</label>
+    <input type="password" id="contrasenia" name="contrasenia" required>
+
+    <div class="form-botones">
+        <button class="btn" type="button" id="btnAccesoRapido">Acceso rapido</button>
+        <button class="btn ok" type="submit">Ingresar</button>
+    </div>
+
+</form>
+
+<script src="/js/login.js"></script>
+
+<%- include("parciales/pie") %>

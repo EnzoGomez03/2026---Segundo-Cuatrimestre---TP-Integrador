@@ -7,6 +7,8 @@ import "./models/productoModel.js"
 import "./models/relaciones.js"
 import rutasVentas from "./routes/ventas.js"
 import ticketsRouter from "./routes/tickets.js";
+import "./models/usuarioModel.js"
+import rutasUsuarios from "./routes/usuarios.js"
 
 
 const app = express();
@@ -26,6 +28,7 @@ app.use("/",rutas);
 app.use("/api/productos" , rutasProductos);
 app.use("/admin", rutasAdmin);
 app.use("/api/ventas",rutasVentas);
+app.use("/api/usuarios",rutasUsuarios);
 app.use("/ventas", ticketsRouter);
 // =============================================================================
 // PUESTA EN MARCHA DEL SERVIDOR
