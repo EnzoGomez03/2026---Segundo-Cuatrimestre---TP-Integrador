@@ -6,6 +6,7 @@ import { sequelize } from "./models/db.js"
 import "./models/productoModel.js"
 import "./models/relaciones.js"
 import rutasVentas from "./routes/ventas.js"
+import ticketsRouter from "./routes/tickets.js";
 
 
 const app = express();
@@ -19,13 +20,13 @@ app.set("views", "./views");
 // los archivos de /public salen en la raiz y las imagenes subidas en /uploads
 app.use(express.static("public"));
 app.use("/uploads", express.static("uploads"));
-// =============================================================================
-// RUTAS
-// =============================================================================
+
+/*=========Rutas=========*/
 app.use("/",rutas);
 app.use("/api/productos" , rutasProductos);
 app.use("/admin", rutasAdmin);
 app.use("/api/ventas",rutasVentas);
+app.use("/ventas", ticketsRouter);
 // =============================================================================
 // PUESTA EN MARCHA DEL SERVIDOR
 // =============================================================================
