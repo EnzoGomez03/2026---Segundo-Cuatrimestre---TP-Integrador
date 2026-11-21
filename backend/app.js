@@ -21,6 +21,7 @@ app.set("views", "./views");
 
 // los archivos de /public salen en la raiz y las imagenes subidas en /uploads
 app.use(express.static("public"));
+app.use(express.static("../frontend"));
 app.use("/uploads", express.static("uploads"));
 
 /*=========Rutas=========*/

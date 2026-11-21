@@ -7,7 +7,7 @@ const continuar = () => {
         alert("Por favor, ingresa tu nombre");
         return;
     }
-    alert("Bienvenido a PuntoGym, " + nombre);
+    window.location.href = "productos.html";
 };
 
 btnContinuar.addEventListener("click",continuar);
