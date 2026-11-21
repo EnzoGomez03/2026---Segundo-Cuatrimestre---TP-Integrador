@@ -6,6 +6,7 @@ import { validarProducto, validarId } from "../middlewares/validarProducto.js";
 const router = express.Router();
 
 router.get("/", productosController.obtenerProductos);
+router.get("/categoria/:categoria", productosController.obtenerProductosPorCategoria);
 router.get("/:id", productosController.obtenerProductosPorId)
 
 // el multer va antes que la validacion porque sino req.body viene vacio en los form-data

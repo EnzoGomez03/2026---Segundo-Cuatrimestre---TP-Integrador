@@ -7,10 +7,9 @@ export async function obtenerProductos(req,res){
     const limite = 5;
     const offset = (pagina - 1) * limite;
 
-
     const productos = await Producto.findAll({
         where: {
-            activo : true
+            activo: true
         },
         limit: limite,
         offset: offset,
@@ -21,7 +20,8 @@ export async function obtenerProductos(req,res){
         where:{
             activo:true
         }
-    })
+    });
+
     const totalPaginas = Math.ceil(total / limite);
 
     res.json({
@@ -31,6 +31,20 @@ export async function obtenerProductos(req,res){
         total: total
     });
 };
+
+export async function obtenerProductosPorCategoria(req, res) {
+    const categoria = req.params.categoria;
+
+    const productos = await Producto.findAll({
+        where: {
+            activo: true,
+            categoria: categoria
+        },
+        order: [["id", "ASC"]]
+    });
+
+    res.json(productos);
+}
 
 export async function obtenerProductosPorId(req, res) {
     const id = Number(req.params.id);

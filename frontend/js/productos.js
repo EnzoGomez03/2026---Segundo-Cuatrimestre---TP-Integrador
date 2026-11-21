@@ -1,15 +1,45 @@
-const contenedorProductos = document.getElementById('productos');
+const contenedorProductos = document.getElementById("productos");
+const btnEquipamiento = document.getElementById("btnEquipamiento");
+const btnAccesorios = document.getElementById("btnAccesorios");
+const btnTodos = document.getElementById("btnTodos");
+const btnAnterior = document.getElementById("btnAnterior");
+const btnSiguiente = document.getElementById("btnSiguiente");
+const infoPagina = document.getElementById("infoPagina");
 
-async function obtenerProductos(){
+let productos = [];
+let paginaActual = 1;
+let totalPaginas = 1;
+let categoriaActual = "Todos";
 
+async function obtenerProductos(pagina){
+    
     try {
-        const respuesta = await fetch('http://localhost:3000/api/productos');
+        const respuesta = await fetch("/api/productos?pagina=" + pagina);
         const datos = await respuesta.json();
-        const productos = datos.productos;
+        productos = datos.productos;
+        paginaActual = datos.pagina;
+        totalPaginas = datos.totalPaginas;
 
         mostrarProductos(productos);
+        actualizarPaginacion();
     } catch (error) {
         console.log("Error al obtener los productos:", error);
+    }
+}
+
+async function obtenerProductosPorCategoria(categoria) {
+    try {
+        const respuesta = await fetch("/api/productos/categoria/" + categoria);
+        const datos = await respuesta.json();
+
+        productos = datos;
+        paginaActual = 1;
+        totalPaginas = Math.ceil(productos.length / 5);
+
+        mostrarPaginaCategoria();
+        actualizarPaginacion();
+    } catch (error) {
+        console.log("Error al obtener los productos por categoría:", error);
     }
 }
 
@@ -30,4 +60,62 @@ function mostrarProductos(productos) {
     }
 }
 
-obtenerProductos();
+function mostrarPaginaCategoria() {
+    const limite = 5;
+    const inicio = (paginaActual - 1) * limite;
+    const fin = inicio + limite;
+
+    const productosPagina = productos.slice(inicio, fin);
+
+    mostrarProductos(productosPagina);
+}
+
+function actualizarPaginacion() {
+    infoPagina.textContent = "Página " + paginaActual + " de " + totalPaginas;
+
+    btnAnterior.disabled = paginaActual <= 1;
+    btnSiguiente.disabled = paginaActual >= totalPaginas;
+}
+
+btnEquipamiento.addEventListener("click", () => {
+    categoriaActual = "Equipamiento";
+    obtenerProductosPorCategoria(categoriaActual);
+});
+
+btnAccesorios.addEventListener("click", () => {
+    categoriaActual = "Accesorios";
+    obtenerProductosPorCategoria(categoriaActual);
+});
+
+btnTodos.addEventListener("click", () => {
+    categoriaActual = "Todos";
+    obtenerProductos(1);
+});
+
+btnAnterior.addEventListener("click", () => {
+    if (paginaActual > 1) {
+        paginaActual--;
+
+        if (categoriaActual === "Todos") {
+            obtenerProductos(paginaActual);
+        } else {
+            mostrarPaginaCategoria();
+            actualizarPaginacion();
+        }
+    }
+});
+
+btnSiguiente.addEventListener("click", () => {
+    if (paginaActual < totalPaginas) {
+        paginaActual++;
+
+        if (categoriaActual === "Todos") {
+            obtenerProductos(paginaActual);
+        } else {
+            mostrarPaginaCategoria();
+            actualizarPaginacion();
+        }
+    }
+});
+
+obtenerProductos(1);
