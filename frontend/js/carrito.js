@@ -4,6 +4,7 @@ const btnFinalizarCompra = document.getElementById("btnFinalizarCompra");
 const modalConfirmar = document.getElementById("modalConfirmar");
 const btnConfirmar = document.getElementById("btnConfirmar");
 const btnCancelar = document.getElementById("btnCancelar");
+const btnVolverProductos = document.getElementById("btnVolverProductos");
 
 let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
@@ -136,6 +137,10 @@ btnCancelar.addEventListener("click", () => {
 btnConfirmar.addEventListener("click", () => {
     modalConfirmar.close();
     finalizarCompra();
+});
+
+btnVolverProductos.addEventListener("click", () => {
+    window.location.href = "productos.html";
 });
 
 mostrarCarrito();
