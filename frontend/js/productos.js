@@ -5,6 +5,7 @@ const btnTodos = document.getElementById("btnTodos");
 const btnAnterior = document.getElementById("btnAnterior");
 const btnSiguiente = document.getElementById("btnSiguiente");
 const infoPagina = document.getElementById("infoPagina");
+const btnVerCarrito = document.getElementById("btnVerCarrito");
 
 let productos = [];
 let paginaActual = 1;
@@ -55,6 +56,7 @@ function mostrarProductos(productos) {
                 <h3>${producto.nombre}</h3>
                 <p>Precio: $${producto.precio}</p>
                 <p>Categoria: ${producto.categoria}</p>
+                <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
             </div>
         `;
     }
@@ -76,6 +78,38 @@ function actualizarPaginacion() {
     btnAnterior.disabled = paginaActual <= 1;
     btnSiguiente.disabled = paginaActual >= totalPaginas;
 }
+
+function agregarAlCarrito(id){
+    const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+    let estaba = false;
+
+    for (let i = 0; i < carrito.length; i++) {
+        if(carrito[i].id === id){
+            carrito[i].cantidad++;
+            estaba = true;
+        }
+    }
+
+    if(!estaba){
+        for (let i = 0; i < productos.length; i++) {
+            if(productos[i].id === id){
+                carrito.push({
+                    id: productos[i].id,
+                    nombre: productos[i].nombre,
+                    precio: productos[i].precio,
+                    imagen: productos[i].imagen,
+                    cantidad: 1
+                });
+            }
+        }
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+btnVerCarrito.addEventListener("click", () => {
+    window.location.href = "carrito.html";
+});
 
 btnEquipamiento.addEventListener("click", () => {
     categoriaActual = "Equipamiento";
