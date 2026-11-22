@@ -6,6 +6,7 @@ const btnAnterior = document.getElementById("btnAnterior");
 const btnSiguiente = document.getElementById("btnSiguiente");
 const infoPagina = document.getElementById("infoPagina");
 const btnVerCarrito = document.getElementById("btnVerCarrito");
+const btnInicio = document.getElementById("btnInicio");
 
 let productos = [];
 let paginaActual = 1;
@@ -109,6 +110,10 @@ function agregarAlCarrito(id){
 
 btnVerCarrito.addEventListener("click", () => {
     window.location.href = "carrito.html";
+});
+
+btnInicio.addEventListener("click", () => {
+    window.location.href = "index.html";
 });
 
 btnEquipamiento.addEventListener("click", () => {
