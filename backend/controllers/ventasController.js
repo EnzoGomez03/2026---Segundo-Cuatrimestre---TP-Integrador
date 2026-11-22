@@ -106,3 +106,31 @@ export async function obtenerVentas(req,res) {
         });
     }
 }
+
+export async function obtenerVentaPorId(req,res) {
+    const id = req.params.id;
+
+    try{
+        const venta = await Venta.findOne({
+            where: {
+                id: id
+            },
+            include: Producto
+        });
+
+        if(!venta){
+            return res.status(404).json({
+                mensaje: "Venta no encontrada"
+            });
+        }
+
+        return res.status(200).json(venta);
+
+    }catch(error){
+        console.log(error);
+
+        return res.status(500).json({
+            mensaje: "Error al obtener la venta"
+        });
+    }
+}
