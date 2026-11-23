@@ -58,6 +58,7 @@ function mostrarProductos(productos) {
                 <p>Precio: $${producto.precio}</p>
                 <p>Categoria: ${producto.categoria}</p>
                 <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
+                <button onclick="quitarDelCarrito(${producto.id})">Quitar del carrito</button>
             </div>
         `;
     }
@@ -102,6 +103,24 @@ function agregarAlCarrito(id){
                     cantidad: 1
                 });
             }
+        }
+    }
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+function quitarDelCarrito(id){
+    let carrito = JSON.parse(localStorage.getItem("carrito")) || [];
+
+    for(let i = 0; i < carrito.length; i++){
+        if(carrito[i].id === id){
+            if(carrito[i].cantidad > 1){
+                carrito[i].cantidad--;
+            }else{
+                carrito.splice(i, 1);
+            }
+
+            break;
         }
     }
 
