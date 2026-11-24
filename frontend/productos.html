@@ -4,21 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PuntoGym - Productos</title>
-    <style>
-        body {
-            background-color: #ffffff;
-            color: #000000;
-        }
-
-        body.tema-oscuro {
-            background-color: #121212;
-            color: #ffffff;
-        }
-    </style>
+    <link rel="icon" type="image/png" href="img/Logotipo deportivo PuntoGym en azul y naranja.png">
+    <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
 
     <header>
+        <img src="img/Logotipo deportivo PuntoGym en azul y naranja.png"
+            alt="Logo PuntoGym"
+            class="logo-puntogym">
+
         <h1>PuntoGym</h1>
 
         <p>Enzo Gómez - Lucas Sparta</p>
@@ -32,14 +27,14 @@
 
     <h2>Productos</h2>
 
-    <div>
+    <div class="categorias">
         <button id="btnEquipamiento">Equipamiento</button>
         <button id="btnAccesorios">Accesorios</button>
         <button id="btnTodos">Todos</button>
     </div>
 
     <div id="productos"></div>
-    <div>
+    <div class="paginacion">
         <button id="btnAnterior">Anterior</button>
         <span id="infoPagina"></span>
         <button id="btnSiguiente">Siguiente</button>

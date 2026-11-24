@@ -52,13 +52,30 @@ function mostrarProductos(productos) {
         const producto = productos[i];
 
         contenedorProductos.innerHTML += `
-            <div>
-                <img src="/uploads/${producto.imagen}" alt="${producto.nombre}" width="200">
-                <h3>${producto.nombre}</h3>
-                <p>Precio: $${producto.precio}</p>
-                <p>Categoria: ${producto.categoria}</p>
-                <button onclick="agregarAlCarrito(${producto.id})">Agregar al carrito</button>
-                <button onclick="quitarDelCarrito(${producto.id})">Quitar del carrito</button>
+            <div class="producto-card">
+
+                <div class="producto-imagen">
+                    <img src="/uploads/${producto.imagen}" alt="${producto.nombre}">
+                </div>
+
+                <div class="producto-info">
+                    <span class="producto-categoria">${producto.categoria}</span>
+
+                    <h3>${producto.nombre}</h3>
+
+                    <p class="producto-precio">$${producto.precio}</p>
+
+                    <div class="producto-acciones">
+                        <button class="btn-agregar" onclick="agregarAlCarrito(${producto.id})">
+                            Agregar
+                        </button>
+
+                        <button class="btn-quitar" onclick="quitarDelCarrito(${producto.id})">
+                            Quitar
+                        </button>
+                    </div>
+                </div>
+
             </div>
         `;
     }

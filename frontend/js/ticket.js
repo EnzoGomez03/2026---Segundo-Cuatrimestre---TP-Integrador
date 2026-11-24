@@ -6,10 +6,6 @@ const btnSalir = document.getElementById("btnSalir");
 
 console.log("Venta del ticket:", ventaId);
 
-btnDescargarPdf.addEventListener("click", () => {
-    window.location.href = "/ventas/" + ventaId + "/ticket";
-});
-
 async function obtenerVenta(){
     try{
         const respuesta = await fetch("/api/ventas/" + ventaId);
@@ -28,10 +24,13 @@ function mostrarTicket(venta){
     const fechaFormateada = fecha.toLocaleDateString("es-AR");
 
     contenedorTicket.innerHTML = `
-        <h3>PuntoGym</h3>
-        <p>Cliente: ${venta.nombreCliente}</p>
-        <p>Fecha: ${fechaFormateada}</p>
-        <h4>Productos</h4>
+        <div class="ticket-encabezado">
+            <h3>PuntoGym</h3>
+            <p>Cliente: <strong>${venta.nombreCliente}</strong></p>
+            <p>Fecha: ${fechaFormateada}</p>
+        </div>
+
+        <h4 class="ticket-titulo-productos">Productos</h4>
     `;
 
     for(let i = 0; i < venta.Productos.length; i++){
@@ -40,23 +39,33 @@ function mostrarTicket(venta){
         const subtotal = producto.precio * cantidad;
 
         contenedorTicket.innerHTML += `
-            <div>
-                <p>Producto: ${producto.nombre}</p>
-                <p>Precio: $${producto.precio}</p>
-                <p>Cantidad: ${cantidad}</p>
-                <p>Subtotal: $${subtotal}</p>
+            <div class="ticket-producto">
+                <div>
+                    <strong>${producto.nombre}</strong>
+                    <p>$${producto.precio} x ${cantidad}</p>
+                </div>
+
+                <strong>$${subtotal}</strong>
             </div>
         `;
     }
 
     contenedorTicket.innerHTML += `
-        <h3>Total: $${venta.total}</h3>
+        <div class="ticket-total">
+            <span>Total</span>
+            <strong>$${venta.total}</strong>
+        </div>
+
+        <p class="ticket-gracias">
+            ¡Gracias por comprar en PuntoGym!
+        </p>
     `;
 }
 
 btnDescargarPdf.addEventListener("click", () => {
     window.location.href = "/ventas/" + ventaId + "/ticket";
 });
+
 btnSalir.addEventListener("click", () => {
     localStorage.removeItem("carrito");
     localStorage.removeItem("nombreCliente");

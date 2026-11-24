@@ -19,14 +19,35 @@ function mostrarCarrito(){
         total = total + subtotal;
 
         contenedorCarrito.innerHTML += `
-            <div>
-                <img src="/uploads/${producto.imagen}" alt="${producto.nombre}" width="200">
-                <h3>${producto.nombre}</h3>
-                <p>$${producto.precio} x ${producto.cantidad} = $${subtotal}</p>
-                <button onclick="disminuir(${producto.id})">-</button>
-                <span>${producto.cantidad}</span>
-                <button onclick="aumentar(${producto.id})">+</button>
-                <button onclick="eliminar(${producto.id})">Eliminar</button>
+            <div class="carrito-card">
+
+                <img class="carrito-imagen"
+                    src="/uploads/${producto.imagen}"
+                    alt="${producto.nombre}">
+
+                <div class="carrito-info">
+                    <h3>${producto.nombre}</h3>
+
+                    <p class="carrito-subtotal">
+                        $${producto.precio} x ${producto.cantidad} = $${subtotal}
+                    </p>
+
+                    <div class="carrito-acciones">
+
+                        <div class="cantidad">
+                            <button onclick="disminuir(${producto.id})">-</button>
+                            <span>${producto.cantidad}</span>
+                            <button onclick="aumentar(${producto.id})">+</button>
+                        </div>
+
+                        <button class="btn-eliminar"
+                                onclick="eliminar(${producto.id})">
+                            Eliminar
+                        </button>
+
+                    </div>
+                </div>
+
             </div>
         `;
     }

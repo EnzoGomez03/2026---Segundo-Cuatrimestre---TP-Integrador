@@ -9,6 +9,12 @@ const continuar = () => {
         return;
     }
 
+    const nombreAnterior = localStorage.getItem("nombreCliente");
+    
+    if(nombreAnterior !== null && nombreAnterior !== nombre){
+        localStorage.removeItem("carrito");
+    }
+
     localStorage.setItem("nombreCliente", nombre);
 
     window.location.href = "productos.html";
